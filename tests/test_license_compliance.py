@@ -41,8 +41,8 @@ class TestLicenseCompliance:
         
         # Find all Python files
         for root, dirs, files in os.walk(project_root):
-            # Skip .git, __pycache__, .pytest_cache and other hidden directories
-            dirs[:] = [d for d in dirs if not d.startswith('.') and d != '__pycache__']
+            # Skip .git, __pycache__, .pytest_cache, venv and other hidden directories
+            dirs[:] = [d for d in dirs if not d.startswith('.') and d not in ['__pycache__', 'venv']]
             
             for file in files:
                 if file.endswith('.py'):

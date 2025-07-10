@@ -311,14 +311,18 @@ class ContextRepository:
                 # Create placeholders for IN clause
                 placeholders = ",".join("?" * len(context_ids))
 
-                query = f"""
+                query = (
+                    """
                     SELECT id, project_id, content,
                            importance_level, status, created_at,
                            expires_at
                     FROM contexts
-                    WHERE id IN ({placeholders})
+                    WHERE id IN ("""
+                    + placeholders
+                    + """)
                     ORDER BY created_at DESC
                 """
+                )
 
                 cursor = await db.execute(query, context_ids)
                 rows = await cursor.fetchall()

@@ -77,7 +77,7 @@ class ContextSummaryFormatter:
                     if item_time.replace(tzinfo=None) > recent_threshold:
                         recent_items += 1
                 except Exception:
-                    pass
+                    logger.warning(f"Could not parse created_at timestamp for context {context.get('id')}: {e}")
 
         return {
             "high_importance": high_importance,

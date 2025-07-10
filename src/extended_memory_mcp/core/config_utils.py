@@ -27,9 +27,12 @@ Centralized configuration management
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Dict
 
+
+import logging
 import yaml
+
+logger = logging.getLogger(__name__)
 
 # Single source of truth for config file path
 try:
@@ -48,7 +51,7 @@ def load_memory_config() -> Dict[str, Any]:
         if MEMORY_CONFIG_PATH.exists():
             with open(MEMORY_CONFIG_PATH, "r", encoding="utf-8") as f:
                 return yaml.safe_load(f) or {}
-    except Exception:
+    except Exception as e:
         # Silently fail and return empty config
-        pass
+        logger.warning(f"Could not open or parse the memory config file at {MEMORY_CONFIG_PATH}: {e}")
     return {}

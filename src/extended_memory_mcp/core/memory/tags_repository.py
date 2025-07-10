@@ -167,7 +167,7 @@ class TagsRepository:
                 # Build query with optional project_id filter
                 if project_id is not None:
                     # Filter by project_id
-                    cursor = await db.execute(
+                    query = (
                         """
                         SELECT t.name, COUNT(ct.context_id) as usage_count, MAX(c.created_at) as latest_use
                         FROM tags t
@@ -180,12 +180,12 @@ class TagsRepository:
                             OR (usage_count = 1 AND datetime(latest_use) > datetime('now', '-' || ? || ' hours'))
                         ORDER BY usage_count DESC, latest_use DESC
                         LIMIT ?
-                    """,
-                        (project_id, min_usage, recent_hours, limit),
+                    """
                     )
+                    cursor = await db.execute(query, (project_id, min_usage, recent_hours, limit),)
                 else:
                     # Original query without project filter
-                    cursor = await db.execute(
+                    query = (
                         """
                         SELECT t.name, COUNT(ct.context_id) as usage_count, MAX(c.created_at) as latest_use
                         FROM tags t
@@ -197,9 +197,9 @@ class TagsRepository:
                             OR (usage_count = 1 AND datetime(latest_use) > datetime('now', '-' || ? || ' hours'))
                         ORDER BY usage_count DESC, latest_use DESC
                         LIMIT ?
-                    """,
-                        (min_usage, recent_hours, limit),
+                    """
                     )
+                    cursor = await db.execute(query, (min_usage, recent_hours, limit),)
 
                 rows = await cursor.fetchall()
                 result = [{"tag": row[0], "count": row[1]} for row in rows]
@@ -285,29 +285,33 @@ class TagsRepository:
 
                 if project_id is not None:
                     # Filter by tags and project_id using OR logic
-                    cursor = await db.execute(
-                        f"""
+                    query = (
+                        """
                         SELECT DISTINCT ct.context_id FROM context_tags ct
                         JOIN tags t ON ct.tag_id = t.id
                         JOIN contexts c ON ct.context_id = c.id
-                        WHERE t.name IN ({placeholders}) AND c.project_id = ?
+                        WHERE t.name IN ("""
+                        + placeholders
+                        + """) AND c.project_id = ?
                         ORDER BY ct.context_id DESC
                         LIMIT ?
-                    """,
-                        (*normalized_tags, project_id, limit),
+                    """
                     )
+                    cursor = await db.execute(query, (*normalized_tags, project_id, limit),)
                 else:
                     # Original query without project filter
-                    cursor = await db.execute(
-                        f"""
+                    query = (
+                        """
                         SELECT DISTINCT ct.context_id FROM context_tags ct
                         JOIN tags t ON ct.tag_id = t.id
-                        WHERE t.name IN ({placeholders})
+                        WHERE t.name IN ("""
+                        + placeholders
+                        + """)
                         ORDER BY ct.context_id DESC
                         LIMIT ?
-                    """,
-                        (*normalized_tags, limit),
+                    """
                     )
+                    cursor = await db.execute(query, (*normalized_tags, limit),)
 
                 rows = await cursor.fetchall()
                 return [row[0] for row in rows]
@@ -368,16 +372,18 @@ class TagsRepository:
                 # Create placeholders for IN clause
                 placeholders = ",".join("?" * len(context_ids))
 
-                cursor = await db.execute(
-                    f"""
+                query = (
+                    """
                     SELECT ct.context_id, t.name
                     FROM context_tags ct
                     JOIN tags t ON ct.tag_id = t.id
-                    WHERE ct.context_id IN ({placeholders})
+                    WHERE ct.context_id IN ("""
+                    + placeholders
+                    + """)
                     ORDER BY ct.context_id, t.name
-                    """,
-                    context_ids,
+                    """
                 )
+                cursor = await db.execute(query, context_ids,)
 
                 rows = await cursor.fetchall()
 
