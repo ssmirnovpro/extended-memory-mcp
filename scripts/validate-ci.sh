@@ -30,7 +30,7 @@ fi
 
 # Install/check dependencies
 echo "📦 Installing dependencies..."
-python3 -m pip install -r requirements.txt > /dev/null 2>&1
+python3 -m pip install -e ".[dev,redis]" > /dev/null 2>&1
 python3 -m pip install pytest pytest-cov black isort flake8 mypy bandit safety > /dev/null 2>&1
 print_status $? "Dependencies installed"
 
