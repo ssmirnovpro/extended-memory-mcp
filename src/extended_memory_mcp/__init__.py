@@ -22,3 +22,5 @@
 """
 Extended Memory MCP - Model Context Protocol server for persistent context storage.
 """
+
+__version__ = "0.9.0"

@@ -24,7 +24,7 @@ What actually happened.
 **Environment:**
 - OS: [e.g. macOS 14.0]
 - Python version: [e.g. 3.11]
-- MCP Server version: [e.g. 0.1.0]
+- MCP Server version: [run `pip show extended-memory-mcp` to get version]
 - Claude Desktop version: [if applicable]
 
 **Logs**

@@ -26,10 +26,16 @@ Extended Memory MCP Server Setup
 """
 
 from setuptools import setup, find_packages
+import os
+import sys
+
+# Add src to path to import version
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+from extended_memory_mcp import __version__
 
 setup(
     name="extended-memory-mcp",
-    version="0.9.0",
+    version=__version__,
     description="Model Context Protocol server for AI memory and context preservation",
     author="Sergey Smirnov",
     python_requires=">=3.8,<4.0",
