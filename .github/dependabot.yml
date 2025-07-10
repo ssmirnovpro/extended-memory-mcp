@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "sergeysmirnov"
+    assignees:
+      - "sergeysmirnov"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "sergeysmirnov"
+    assignees:
+      - "sergeysmirnov"
+    commit-message:
+      prefix: "ci"
+      include: "scope"

@@ -1,0 +1,85 @@
+{
+  "save_context": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string",
+        "description": "Content to save"
+      },
+      "importance_level": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Importance level (1-10)"
+      },
+      "tags": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Tags for categorization"
+      },
+      "project_id": {
+        "type": "string",
+        "description": "Project identifier (optional)"
+      }
+    },
+    "required": ["content"]
+  },
+  "load_contexts": {
+    "type": "object",
+    "properties": {
+      "project_id": {
+        "type": "string",
+        "description": "Project identifier (optional)"
+      },
+      "importance_level": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10,
+        "description": "Minimum importance level (1-10, optional, default: 7)"
+      },
+      "limit": {
+        "type": "integer",
+        "default": 10,
+        "description": "Maximum number of contexts to load"
+      },
+      "tags_filter": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Filter by specific tags (optional, max 10 tags)"
+      }
+    }
+  },
+  "forget_context": {
+    "type": "object",
+    "properties": {
+      "context_id": {
+        "type": "integer",
+        "description": "ID of context to delete"
+      }
+    },
+    "required": ["context_id"]
+  },
+  "list_all_projects": {
+    "type": "object",
+    "properties": {}
+  },
+  "get_popular_tags": {
+    "type": "object",
+    "properties": {
+      "limit": {
+        "type": "integer",
+        "default": 20,
+        "description": "Maximum number of tags to return (default: 20)"
+      },
+      "min_usage": {
+        "type": "integer",
+        "default": 1,
+        "description": "Minimum usage count to include (default: 1)"
+      },
+      "project_id": {
+        "type": "string",
+        "description": "Project ID to filter tags (optional, uses current project if not specified)"
+      }
+    }
+  }
+}

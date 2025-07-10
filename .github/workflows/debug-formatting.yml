@@ -1,0 +1,50 @@
+name: Debug Formatting
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  debug-formatting:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install formatting tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install black isort
+
+    - name: Check Python version
+      run: python --version
+
+    - name: Check black version
+      run: python3 -m black --version
+
+    - name: Check isort version
+      run: python3 -m isort --version
+
+    - name: List files to be checked
+      run: find mcp-server/ -name "*.py" | head -10
+
+    - name: Run Black check with verbose output
+      run: |
+        echo "Running Black check..."
+        python3 -m black --check --verbose mcp-server/ || echo "Black check failed with exit code $?"
+
+    - name: Run isort check with verbose output
+      run: |
+        echo "Running isort check..."
+        python3 -m isort --check-only --verbose mcp-server/ || echo "isort check failed with exit code $?"
+
+    - name: Check specific problematic files
+      run: |
+        echo "Checking server.py specifically..."
+        python3 -m black --check --diff mcp-server/server.py || echo "server.py failed black check"
+        python3 -m isort --check-only --diff mcp-server/server.py || echo "server.py failed isort check"

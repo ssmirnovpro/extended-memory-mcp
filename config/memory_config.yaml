@@ -1,0 +1,119 @@
+# Memory MCP Server Configuration
+# Environment variables that users can override in Claude Desktop config
+
+# Storage Configuration
+STORAGE_CONNECTION_STRING: "sqlite:///~/.local/share/extended-memory-mcp/memory.db"
+
+# Redis Configuration (when using Redis storage)
+REDIS_KEY_PREFIX: "extended_memory"
+REDIS_TTL_HOURS: 8760
+
+# Logging Configuration
+LOG_LEVEL: "INFO"
+
+# Custom instructions for Claude configuration
+# Path to a markdown file containing custom instructions
+CUSTOM_INSTRUCTION_PATH: ""
+
+# === Internal Configuration (not overridable by users) ===
+
+# Default values for internal use
+defaults:
+  storage:
+    # SQLite specific settings
+    connection_timeout: 30.0
+    pragma_settings:
+      journal_mode: "WAL"
+      synchronous: "NORMAL"
+      cache_size: -64000  # 64MB cache
+    
+    # Redis specific settings
+    redis_socket_timeout: 30.0
+    redis_max_connections: 10
+    redis_health_check_interval: 30
+    
+  logging:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    max_log_size_mb: 10
+    backup_count: 5
+    
+  server:
+    name: "extended-memory"
+    version: "1.0.0"
+    description: "Persistent memory for cross-chat interactions"
+    mcp_timeout: 30.0
+    max_request_size_mb: 10
+    
+  memory:
+    # Context retention defaults
+    default_importance_threshold: 5
+    auto_archive_days: 30
+    max_contexts_per_project: 10000
+    context_summary_length: 500
+    
+    # Analysis defaults
+    similarity_threshold: 0.8
+    max_search_results: 20
+    analytics_batch_size: 100
+
+# Runtime configuration (can override defaults)
+storage:
+  # Storage provider: sqlite, redis
+  provider: "sqlite"  # default: sqlite
+  
+  # Redis settings  
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: null  # optional
+    # Uses REDIS_KEY_PREFIX environment variable if not specified
+    # key_prefix: "custom_prefix"
+    # Uses REDIS_TTL_HOURS environment variable if not specified  
+    # ttl_hours: 168  # 1 week custom TTL
+
+# Unused config section
+database:
+  auto_location: true
+
+logging:
+  # Uses LOG_LEVEL environment variable if not specified
+  # level: "DEBUG"  # Override default LOG_LEVEL
+  # Uses defaults.logging.format if not specified
+  # format: "custom format"
+
+server:
+  # Uses defaults.server values if not specified
+  # name: "custom-server-name"
+  # version: "2.0.0"
+
+# Future: Retention policies and advanced features
+retention_policies:
+  # These will be implemented in future versions
+  working_memory_hours: 24
+  project_context_months: 6  
+  critical_decisions_years: 1
+
+# Future: Importance thresholds  
+importance_thresholds:
+  auto_save_threshold: 6
+  critical_threshold: 8
+  archive_threshold: 3
+
+# Future: Project detection
+project_detection:
+  auto_detection: true
+  confidence_threshold: 0.7
+  fallback_project: "general"
+
+# Tags configuration for popular tags display
+tags:
+  popular_tags_limit: 10
+  popular_tags_min_usage: 2
+  show_in_responses: true
+  # Show tags used only once if they were created in last N hours
+  recent_tags_hours: 24
+  # Threshold for considering a tag "popular" in smart grouping
+  smart_grouping_popular_threshold: 3
+  # Threshold for considering a tag "recent" in smart grouping
+  smart_grouping_recent_threshold: 1

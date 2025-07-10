@@ -1,0 +1,929 @@
+{
+  "benchmark_info": {
+    "description": "Redis vs SQLite Performance Comparison",
+    "focus": "Operations affected by N+1 issues",
+    "redis_status": "With N+1 issues (unoptimized)",
+    "sqlite_status": "Optimized (post N+1 fixes)",
+    "timestamp": 1751777375.7924101
+  },
+  "scenarios": [
+    {
+      "scenario": {
+        "contexts": 100,
+        "tags": 20,
+        "tags_per_context": 3,
+        "name": "small"
+      },
+      "providers": {
+        "redis": {
+          "benchmarks": [
+            {
+              "method": "get_popular_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 4.65,
+                  "min_time_ms": 4.2,
+                  "max_time_ms": 4.98,
+                  "results_count": 10
+                },
+                {
+                  "test_case": {
+                    "limit": 20,
+                    "min_usage": 3,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 4.09,
+                  "min_time_ms": 3.88,
+                  "max_time_ms": 4.29,
+                  "results_count": 20
+                },
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 62.53,
+                  "min_time_ms": 58.67,
+                  "max_time_ms": 68.79,
+                  "results_count": 10
+                }
+              ]
+            },
+            {
+              "method": "find_contexts_by_multiple_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 50,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.59,
+                  "min_time_ms": 0.47,
+                  "max_time_ms": 0.82,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2",
+                      "tag_3",
+                      "tag_4"
+                    ],
+                    "limit": 100,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 1.23,
+                  "min_time_ms": 0.97,
+                  "max_time_ms": 1.51,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 50,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 6.0,
+                  "min_time_ms": 5.72,
+                  "max_time_ms": 6.18,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "load_contexts",
+              "results": [
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 20,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.64,
+                  "min_time_ms": 0.61,
+                  "max_time_ms": 0.66,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 30,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.69,
+                  "min_time_ms": 0.59,
+                  "max_time_ms": 0.84,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "common_tag"
+                    ],
+                    "limit": 25,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 2.04,
+                  "min_time_ms": 1.82,
+                  "max_time_ms": 2.31,
+                  "results_count": 0
+                }
+              ]
+            }
+          ],
+          "summary": {
+            "total_time_ms": 82.46,
+            "avg_time_ms": 9.16,
+            "total_operations": 9
+          }
+        },
+        "sqlite": {
+          "benchmarks": [
+            {
+              "method": "get_popular_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 3.54,
+                  "min_time_ms": 3.15,
+                  "max_time_ms": 4.32,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "limit": 20,
+                    "min_usage": 3,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 3.12,
+                  "min_time_ms": 2.9,
+                  "max_time_ms": 3.32,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 3.05,
+                  "min_time_ms": 3.01,
+                  "max_time_ms": 3.09,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "find_contexts_by_multiple_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 50,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.27,
+                  "min_time_ms": 0.24,
+                  "max_time_ms": 0.35,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2",
+                      "tag_3",
+                      "tag_4"
+                    ],
+                    "limit": 100,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.18,
+                  "min_time_ms": 0.17,
+                  "max_time_ms": 0.19,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 50,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 0.16,
+                  "min_time_ms": 0.16,
+                  "max_time_ms": 0.17,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "load_contexts",
+              "results": [
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 20,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.15,
+                  "min_time_ms": 0.14,
+                  "max_time_ms": 0.17,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 30,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.27,
+                  "min_time_ms": 0.14,
+                  "max_time_ms": 0.51,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "common_tag"
+                    ],
+                    "limit": 25,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 0.28,
+                  "min_time_ms": 0.2,
+                  "max_time_ms": 0.34,
+                  "results_count": 0
+                }
+              ]
+            }
+          ],
+          "summary": {
+            "total_time_ms": 11.02,
+            "avg_time_ms": 1.22,
+            "total_operations": 9
+          }
+        }
+      },
+      "comparison": {
+        "redis_slower_by": 7.51,
+        "redis_avg_ms": 9.16,
+        "sqlite_avg_ms": 1.22,
+        "verdict": "Redis slower"
+      }
+    },
+    {
+      "scenario": {
+        "contexts": 1000,
+        "tags": 100,
+        "tags_per_context": 4,
+        "name": "medium"
+      },
+      "providers": {
+        "redis": {
+          "benchmarks": [
+            {
+              "method": "get_popular_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 19.58,
+                  "min_time_ms": 18.11,
+                  "max_time_ms": 21.38,
+                  "results_count": 10
+                },
+                {
+                  "test_case": {
+                    "limit": 20,
+                    "min_usage": 3,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 18.7,
+                  "min_time_ms": 17.79,
+                  "max_time_ms": 19.19,
+                  "results_count": 20
+                },
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 788.65,
+                  "min_time_ms": 774.96,
+                  "max_time_ms": 815.31,
+                  "results_count": 10
+                }
+              ]
+            },
+            {
+              "method": "find_contexts_by_multiple_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 50,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.39,
+                  "min_time_ms": 0.38,
+                  "max_time_ms": 0.41,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2",
+                      "tag_3",
+                      "tag_4"
+                    ],
+                    "limit": 100,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.9,
+                  "min_time_ms": 0.89,
+                  "max_time_ms": 0.91,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 50,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 7.36,
+                  "min_time_ms": 7.1,
+                  "max_time_ms": 7.8,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "load_contexts",
+              "results": [
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 20,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.39,
+                  "min_time_ms": 0.38,
+                  "max_time_ms": 0.41,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 30,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.55,
+                  "min_time_ms": 0.54,
+                  "max_time_ms": 0.55,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "common_tag"
+                    ],
+                    "limit": 25,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 19.78,
+                  "min_time_ms": 17.39,
+                  "max_time_ms": 24.18,
+                  "results_count": 0
+                }
+              ]
+            }
+          ],
+          "summary": {
+            "total_time_ms": 856.3,
+            "avg_time_ms": 95.14,
+            "total_operations": 9
+          }
+        },
+        "sqlite": {
+          "benchmarks": [
+            {
+              "method": "get_popular_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 2.87,
+                  "min_time_ms": 2.81,
+                  "max_time_ms": 2.96,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "limit": 20,
+                    "min_usage": 3,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 2.89,
+                  "min_time_ms": 2.8,
+                  "max_time_ms": 2.99,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 2.97,
+                  "min_time_ms": 2.95,
+                  "max_time_ms": 2.99,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "find_contexts_by_multiple_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 50,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.24,
+                  "min_time_ms": 0.21,
+                  "max_time_ms": 0.27,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2",
+                      "tag_3",
+                      "tag_4"
+                    ],
+                    "limit": 100,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.2,
+                  "min_time_ms": 0.2,
+                  "max_time_ms": 0.2,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 50,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 0.19,
+                  "min_time_ms": 0.19,
+                  "max_time_ms": 0.2,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "load_contexts",
+              "results": [
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 20,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.21,
+                  "min_time_ms": 0.19,
+                  "max_time_ms": 0.24,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 30,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.22,
+                  "min_time_ms": 0.17,
+                  "max_time_ms": 0.29,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "common_tag"
+                    ],
+                    "limit": 25,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 0.21,
+                  "min_time_ms": 0.2,
+                  "max_time_ms": 0.23,
+                  "results_count": 0
+                }
+              ]
+            }
+          ],
+          "summary": {
+            "total_time_ms": 10.0,
+            "avg_time_ms": 1.11,
+            "total_operations": 9
+          }
+        }
+      },
+      "comparison": {
+        "redis_slower_by": 85.71,
+        "redis_avg_ms": 95.14,
+        "sqlite_avg_ms": 1.11,
+        "verdict": "Redis slower"
+      }
+    },
+    {
+      "scenario": {
+        "contexts": 5000,
+        "tags": 500,
+        "tags_per_context": 5,
+        "name": "large"
+      },
+      "providers": {
+        "redis": {
+          "benchmarks": [
+            {
+              "method": "get_popular_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 96.3,
+                  "min_time_ms": 92.68,
+                  "max_time_ms": 100.48,
+                  "results_count": 10
+                },
+                {
+                  "test_case": {
+                    "limit": 20,
+                    "min_usage": 3,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 96.97,
+                  "min_time_ms": 95.38,
+                  "max_time_ms": 99.88,
+                  "results_count": 20
+                },
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 4865.29,
+                  "min_time_ms": 4586.79,
+                  "max_time_ms": 5362.49,
+                  "results_count": 10
+                }
+              ]
+            },
+            {
+              "method": "find_contexts_by_multiple_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 50,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.41,
+                  "min_time_ms": 0.38,
+                  "max_time_ms": 0.44,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2",
+                      "tag_3",
+                      "tag_4"
+                    ],
+                    "limit": 100,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 1.01,
+                  "min_time_ms": 0.98,
+                  "max_time_ms": 1.03,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 50,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 9.21,
+                  "min_time_ms": 8.93,
+                  "max_time_ms": 9.53,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "load_contexts",
+              "results": [
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 20,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.39,
+                  "min_time_ms": 0.37,
+                  "max_time_ms": 0.4,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 30,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.63,
+                  "min_time_ms": 0.56,
+                  "max_time_ms": 0.76,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "common_tag"
+                    ],
+                    "limit": 25,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 87.25,
+                  "min_time_ms": 84.28,
+                  "max_time_ms": 91.74,
+                  "results_count": 0
+                }
+              ]
+            }
+          ],
+          "summary": {
+            "total_time_ms": 5157.46,
+            "avg_time_ms": 573.05,
+            "total_operations": 9
+          }
+        },
+        "sqlite": {
+          "benchmarks": [
+            {
+              "method": "get_popular_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 3.19,
+                  "min_time_ms": 2.76,
+                  "max_time_ms": 4.01,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "limit": 20,
+                    "min_usage": 3,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 3.1,
+                  "min_time_ms": 2.93,
+                  "max_time_ms": 3.33,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "limit": 10,
+                    "min_usage": 2,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 3.11,
+                  "min_time_ms": 3.03,
+                  "max_time_ms": 3.16,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "find_contexts_by_multiple_tags",
+              "results": [
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 50,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.24,
+                  "min_time_ms": 0.21,
+                  "max_time_ms": 0.26,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2",
+                      "tag_3",
+                      "tag_4"
+                    ],
+                    "limit": 100,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.25,
+                  "min_time_ms": 0.22,
+                  "max_time_ms": 0.28,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 50,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 0.34,
+                  "min_time_ms": 0.29,
+                  "max_time_ms": 0.39,
+                  "results_count": 0
+                }
+              ]
+            },
+            {
+              "method": "load_contexts",
+              "results": [
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1"
+                    ],
+                    "limit": 20,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.32,
+                  "min_time_ms": 0.28,
+                  "max_time_ms": 0.36,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "tag_0",
+                      "tag_1",
+                      "tag_2"
+                    ],
+                    "limit": 30,
+                    "project_id": null
+                  },
+                  "avg_time_ms": 0.25,
+                  "min_time_ms": 0.2,
+                  "max_time_ms": 0.32,
+                  "results_count": 0
+                },
+                {
+                  "test_case": {
+                    "tags_filter": [
+                      "common_tag"
+                    ],
+                    "limit": 25,
+                    "project_id": "project_1"
+                  },
+                  "avg_time_ms": 0.19,
+                  "min_time_ms": 0.16,
+                  "max_time_ms": 0.21,
+                  "results_count": 0
+                }
+              ]
+            }
+          ],
+          "summary": {
+            "total_time_ms": 10.99,
+            "avg_time_ms": 1.22,
+            "total_operations": 9
+          }
+        }
+      },
+      "comparison": {
+        "redis_slower_by": 469.71,
+        "redis_avg_ms": 573.05,
+        "sqlite_avg_ms": 1.22,
+        "verdict": "Redis slower"
+      }
+    }
+  ]
+}

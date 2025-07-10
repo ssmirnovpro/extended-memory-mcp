@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include src/extended_memory_mcp/config/tools/descriptions *.md
+recursive-include src/extended_memory_mcp/config/tools/schema *.json
