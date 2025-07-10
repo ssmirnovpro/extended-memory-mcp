@@ -53,5 +53,7 @@ def load_memory_config() -> Dict[str, Any]:
                 return yaml.safe_load(f) or {}
     except Exception as e:
         # Silently fail and return empty config
-        logger.warning(f"Could not open or parse the memory config file at {MEMORY_CONFIG_PATH}: {e}")
+        logger.warning(
+            f"Could not open or parse the memory config file at {MEMORY_CONFIG_PATH}: {e}"
+        )
     return {}

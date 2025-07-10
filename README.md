@@ -49,21 +49,6 @@ pip install -e ".[dev]"
 }
 ```
 
-**Configuration for PyPI Installation (when available):**
-```json
-{
-  "mcpServers": {
-    "extended-memory": {
-      "command": "extended-memory-mcp-server",
-      "env": {
-        "STORAGE_CONNECTION_STRING": "sqlite:///your/path/memory.db",
-        "LOG_LEVEL": "INFO"
-      }
-    }
-  }
-}
-```
-
 **If you already have other MCP servers configured, add the `extended-memory` entry to your existing `mcpServers` section.**
 
 #### Configuration Parameters

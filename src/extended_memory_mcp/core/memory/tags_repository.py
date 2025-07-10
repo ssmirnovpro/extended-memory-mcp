@@ -167,8 +167,7 @@ class TagsRepository:
                 # Build query with optional project_id filter
                 if project_id is not None:
                     # Filter by project_id
-                    query = (
-                        """
+                    query = """
                         SELECT t.name, COUNT(ct.context_id) as usage_count, MAX(c.created_at) as latest_use
                         FROM tags t
                         JOIN context_tags ct ON t.id = ct.tag_id
@@ -181,12 +180,13 @@ class TagsRepository:
                         ORDER BY usage_count DESC, latest_use DESC
                         LIMIT ?
                     """
+                    cursor = await db.execute(
+                        query,
+                        (project_id, min_usage, recent_hours, limit),
                     )
-                    cursor = await db.execute(query, (project_id, min_usage, recent_hours, limit),)
                 else:
                     # Original query without project filter
-                    query = (
-                        """
+                    query = """
                         SELECT t.name, COUNT(ct.context_id) as usage_count, MAX(c.created_at) as latest_use
                         FROM tags t
                         JOIN context_tags ct ON t.id = ct.tag_id
@@ -198,8 +198,10 @@ class TagsRepository:
                         ORDER BY usage_count DESC, latest_use DESC
                         LIMIT ?
                     """
+                    cursor = await db.execute(
+                        query,
+                        (min_usage, recent_hours, limit),
                     )
-                    cursor = await db.execute(query, (min_usage, recent_hours, limit),)
 
                 rows = await cursor.fetchall()
                 result = [{"tag": row[0], "count": row[1]} for row in rows]
@@ -297,7 +299,10 @@ class TagsRepository:
                         LIMIT ?
                     """
                     )
-                    cursor = await db.execute(query, (*normalized_tags, project_id, limit),)
+                    cursor = await db.execute(
+                        query,
+                        (*normalized_tags, project_id, limit),
+                    )
                 else:
                     # Original query without project filter
                     query = (
@@ -311,7 +316,10 @@ class TagsRepository:
                         LIMIT ?
                     """
                     )
-                    cursor = await db.execute(query, (*normalized_tags, limit),)
+                    cursor = await db.execute(
+                        query,
+                        (*normalized_tags, limit),
+                    )
 
                 rows = await cursor.fetchall()
                 return [row[0] for row in rows]
@@ -383,7 +391,10 @@ class TagsRepository:
                     ORDER BY ct.context_id, t.name
                     """
                 )
-                cursor = await db.execute(query, context_ids,)
+                cursor = await db.execute(
+                    query,
+                    context_ids,
+                )
 
                 rows = await cursor.fetchall()
 
