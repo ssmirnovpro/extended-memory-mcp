@@ -52,7 +52,7 @@ from pathlib import Path
 
 # Setup path and imports
 import sys
-sys.path.append("/Users/sergeysmirnov/projects/extended-memory-mcp-dev/mcp-server")
+sys.path.append("/Users/sergeysmirnov/projects/extended-memory-mcp/mcp-server")
 
 from core.storage.providers.sqlite.sqlite_provider import SQLiteStorageProvider
 
