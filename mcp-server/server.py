@@ -30,15 +30,18 @@ import sys
 import asyncio
 from pathlib import Path
 
+
 def main():
     # Add src to path for development mode
     src_path = str(Path(__file__).parent.parent / "src")
     if src_path not in sys.path:
         sys.path.insert(0, src_path)
-    
+
     # Import and run the main server
     from extended_memory_mcp.server import main as server_main
+
     asyncio.run(server_main())
+
 
 if __name__ == "__main__":
     main()
