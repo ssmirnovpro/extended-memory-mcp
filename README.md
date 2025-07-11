@@ -1,5 +1,9 @@
 # Extended Memory MCP
 
+[![PyPI version](https://badge.fury.io/py/extended-memory-mcp.svg)](https://badge.fury.io/py/extended-memory-mcp)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **Extended Memory MCP is a Model Context Protocol (MCP) tool that provides cross-session memory storage for Claude Desktop app.**
 
 This tool solves a fundamental problem: when your Claude conversation reaches token limits or you start a new chat, all context is lost. Claude forgets your project details, previous decisions, and working relationships. You have to re-explain everything from scratch.
@@ -20,6 +24,12 @@ Extended Memory MCP automatically saves and restores:
 
 ### Step 1: Installation
 
+#### Option A: Install from PyPI (Recommended)
+```bash
+pip install extended-memory-mcp
+```
+
+#### Option B: Install from Source (Development)
 ```bash
 git clone https://github.com/ssmirnovpro/extended-memory-mcp.git
 cd extended-memory-mcp
@@ -38,10 +48,24 @@ pip install -e ".[dev]"
 {
   "mcpServers": {
     "extended-memory": {
+      "command": "python3",
+      "args": ["-m", "extended_memory_mcp.server"],
+      "env": {
+        "LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}
+```
+
+**Configuration for source installation (if you installed from GitHub):**
+```json
+{
+  "mcpServers": {
+    "extended-memory": {
       "command": "python3", 
       "args": ["/path/to/extended-memory-mcp/mcp-server/server.py"],
       "env": {
-        "STORAGE_CONNECTION_STRING": "sqlite:///your/path/memory.db",
         "LOG_LEVEL": "INFO"
       }
     }
@@ -50,6 +74,18 @@ pip install -e ".[dev]"
 ```
 
 **If you already have other MCP servers configured, add the `extended-memory` entry to your existing `mcpServers` section.**
+
+### Step 3: Additional Installation Options
+
+#### Install with Redis Support
+```bash
+pip install extended-memory-mcp[redis]
+```
+
+#### Install Development Version
+```bash
+pip install extended-memory-mcp[dev]
+```
 
 #### Configuration Parameters
 
