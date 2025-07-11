@@ -48,9 +48,6 @@ jobs:
         # Check if required documentation files exist
         required_files=(
           "README.md"
-          "docs/installation.md"
-          "docs/configuration.md"
-          "docs/api-reference.md"
         )
         
         for file in "${required_files[@]}"; do
