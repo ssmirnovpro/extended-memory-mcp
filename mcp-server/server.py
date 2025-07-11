@@ -26,8 +26,8 @@ Legacy entry point for Extended Memory MCP Server
 Maintains backwards compatibility with existing configurations.
 """
 
-import sys
 import asyncio
+import sys
 from pathlib import Path
 
 
