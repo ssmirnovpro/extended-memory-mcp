@@ -125,7 +125,7 @@ jobs:
 
     - name: Run Safety dependency scanner
       run: |
-        python3 -m pip freeze | python3 -m safety scan --stdin
+        python3 -m pip freeze | python3 -m safety scan --stdin --full-report
         echo "Safety scan completed successfully"
       # run: safety check --json --output safety-report.json || true
 
